@@ -1248,15 +1248,16 @@ func (c *Client) SetFilePrio(hash string, ids []int, priority int) error {
 }
 
 func (c *Client) SetFilePrioCtx(ctx context.Context, hash string, ids []int, priority int) error {
-	idStrList := make([]string, len(ids))
+	var idStrList []string
 	for _, id := range ids {
 		idStrList = append(idStrList, strconv.Itoa(id))
 	}
-	resp, err := c.postCtx(ctx, "torrents/filePrio", map[string]string{
+	opts := map[string]string{
 		"hash":     hash,
 		"id":       strings.Join(idStrList, "|"),
 		"priority": strconv.Itoa(priority),
-	})
+	}
+	resp, err := c.postCtx(ctx, "torrents/filePrio", opts)
 	if err != nil {
 		return errors.Wrap(err, "could not set file priority for torrent: %v", hash)
 	}
