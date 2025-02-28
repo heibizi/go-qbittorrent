@@ -12,8 +12,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/slimymarkup/go-qbittorrent/errors"
 	"github.com/avast/retry-go"
+	"github.com/heibizi/go-qbittorrent/errors"
 )
 
 func (c *Client) getCtx(ctx context.Context, endpoint string, opts map[string]string) (*http.Response, error) {

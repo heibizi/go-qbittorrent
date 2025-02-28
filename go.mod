@@ -1,4 +1,4 @@
-module github.com/slimymarkup/go-qbittorrent
+module github.com/heibizi/go-qbittorrent
 
 go 1.22.0
 

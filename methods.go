@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/slimymarkup/go-qbittorrent/errors"
+	"github.com/heibizi/go-qbittorrent/errors"
 
 	"github.com/Masterminds/semver"
 )
