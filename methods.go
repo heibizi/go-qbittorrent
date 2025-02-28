@@ -481,7 +481,7 @@ func (c *Client) SyncMainDataCtx(ctx context.Context, rid int64) (*MainData, err
 	}
 
 	defer resp.Body.Close()
-	
+
 	var info MainData
 	if err := json.NewDecoder(resp.Body).Decode(&info); err != nil {
 		return nil, errors.Wrap(err, "could not unmarshal body")
@@ -1221,6 +1221,30 @@ func (c *Client) ToggleFirstLastPiecePrioCtx(ctx context.Context, hashes []strin
 		return errors.New("unexpected status while toggling first/last piece priority for torrents: %v, status: %d", hashes, resp.StatusCode)
 	}
 
+	return nil
+}
+
+func (c *Client) SetFilePrio(hash string, ids []int, priority int) error {
+	return c.SetFilePrioCtx(context.Background(), hash, ids, priority)
+}
+
+func (c *Client) SetFilePrioCtx(ctx context.Context, hash string, ids []int, priority int) error {
+	idStrList := make([]string, len(ids))
+	for _, id := range ids {
+		idStrList = append(idStrList, strconv.Itoa(id))
+	}
+	resp, err := c.postCtx(ctx, "torrents/filePrio", map[string]string{
+		"hash":     hash,
+		"id":       strings.Join(idStrList, "|"),
+		"priority": strconv.Itoa(priority),
+	})
+	if err != nil {
+		return errors.Wrap(err, "could not set file priority for torrent: %v", hash)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return errors.New("could not set file priority for torrent: %v unexpected status: %v", hash, resp.StatusCode)
+	}
 	return nil
 }
 
