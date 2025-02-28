@@ -201,10 +201,29 @@ func (c *Client) GetTorrentsCtx(ctx context.Context, o TorrentFilterOptions) ([]
 	}
 
 	var torrents []Torrent
-	if err := json.Unmarshal(body, &torrents); err != nil {
+	if err = json.Unmarshal(body, &torrents); err != nil {
 		return nil, errors.Wrap(err, "could not unmarshal body")
 	}
 
+	if o.Tag != "" {
+		var filterTorrents []Torrent
+		tags := strings.Split(o.Tag, ",")
+		for _, item := range torrents {
+			tagMatched := false
+			for _, tag := range strings.Split(item.Tags, ",") {
+				for _, s := range tags {
+					if strings.TrimSpace(tag) == s {
+						tagMatched = true
+						break
+					}
+				}
+			}
+			if tagMatched {
+				filterTorrents = append(filterTorrents, item)
+			}
+		}
+		return filterTorrents, nil
+	}
 	return torrents, nil
 }
 
