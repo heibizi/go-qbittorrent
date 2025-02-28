@@ -360,6 +360,14 @@ func (c *Client) AddTorrentFromMemoryCtx(ctx context.Context, buf []byte, option
 		return errors.New("could not add torrent, unexpected status: %v", res.StatusCode)
 	}
 
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		return err
+	}
+	if string(body) != "Ok." {
+		return errors.New("could not add torrent, unexpected status: %v", string(body))
+	}
+
 	return nil
 }
 
@@ -379,6 +387,14 @@ func (c *Client) AddTorrentFromFileCtx(ctx context.Context, filePath string, opt
 
 	if res.StatusCode != http.StatusOK {
 		return errors.New("could not add torrent %v unexpected status: %v", filePath, res.StatusCode)
+	}
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		return err
+	}
+	if string(body) != "Ok." {
+		return errors.New("could not add torrent %v unexpected status: %v", filePath, string(body))
 	}
 
 	return nil
@@ -405,6 +421,14 @@ func (c *Client) AddTorrentFromUrlCtx(ctx context.Context, url string, options m
 
 	if res.StatusCode != http.StatusOK {
 		return errors.New("could not add torrent %v unexpected status: %v", url, res.StatusCode)
+	}
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		return err
+	}
+	if string(body) != "Ok." {
+		return errors.New("could not add torrent %v unexpected status: %v", url, string(body))
 	}
 
 	return nil
